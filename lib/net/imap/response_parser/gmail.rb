@@ -28,7 +28,7 @@ class Net::IMAP::ResponseParser::Gmail < Net::IMAP::ResponseParser
       when /\A(?:UID)\z/ni
         name, val = uid_data
       when /\A(?:X-GM-LABELS)\z/ni
-        name, val = flags_data
+        name, val = label_data
       when /\A(?:X-GM-MSGID)\z/ni
         name, val = uid_data
       when /\A(?:X-GM-THRID)\z/ni
@@ -39,5 +39,29 @@ class Net::IMAP::ResponseParser::Gmail < Net::IMAP::ResponseParser
       attr[name] = val
     end
     return attr
+  end
+
+  def label_data
+    token = match(T_ATOM)
+    name = token.value.upcase
+    match(T_SPACE)
+    return name, astring_list
+  end
+
+  def astring_list
+    result = []
+    match(T_LPAR)
+    while true
+      token = lookahead
+      case token.symbol
+      when T_RPAR
+        shift_token
+        break
+      when T_SPACE
+        shift_token
+      end
+      result.push(astring)
+    end
+    return result
   end
 end
