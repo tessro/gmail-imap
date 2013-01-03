@@ -1,4 +1,4 @@
-require 'net/imap/response_parser/gmail'
+require 'net/imap/gmail'
 require 'test/unit'
 
 class Net::IMAP::ResponseParser::GmailTest < Test::Unit::TestCase
