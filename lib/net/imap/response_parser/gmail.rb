@@ -1,5 +1,5 @@
 class Net::IMAP::ResponseParser::Gmail < Net::IMAP::ResponseParser
-  def msg_att
+  def msg_att(n = nil)
     match(T_LPAR)
     attr = {}
     while true
@@ -34,7 +34,11 @@ class Net::IMAP::ResponseParser::Gmail < Net::IMAP::ResponseParser
       when /\A(?:X-GM-THRID)\z/ni
         name, val = uid_data
       else
-        parse_error("unknown attribute `%s'", token.value)
+        if n # Ruby >= 2.0.0
+          parse_error("unknown attribute `%s' for {%d}", token.value, n)
+        else # Ruby <= 1.9.3
+          parse_error("unknown attribute `%s'", token.value)
+        end
       end
       attr[name] = val
     end
