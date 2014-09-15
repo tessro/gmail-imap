@@ -1,6 +1,6 @@
 require 'net/imap/gmail'
 require 'test/unit'
-require 'mocha'
+require 'mocha/test_unit'
 
 class Net::IMAP::GmailTest < Test::Unit::TestCase
   def test_is_imap

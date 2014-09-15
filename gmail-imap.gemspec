@@ -15,5 +15,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = GmailImap::VERSION
 
-  gem.add_development_dependency "mocha", ['>= 0']
+  gem.add_development_dependency "mocha", ['>= 1']
 end
